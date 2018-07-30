@@ -1,0 +1,22 @@
+type User {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  email: String! @unique
+  password: String!
+}
+
+type Category {
+  id: ID! @unique
+  name: String!
+}
+
+type Video {
+  id: ID! @unique
+  name: String!
+  description: String!
+  path: String!
+  category: Category!
+  owner: User!
+  isEncoded: Boolean! @default(value: "false")
+}

@@ -1,0 +1,9 @@
+endpoint: http://localhost:4466/video
+datamodel: datamodel.graphql
+secret: dmlkZW8=
+
+hooks:
+  post-deploy:
+    - echo "Deployment finished"
+    - graphql get-schema --project db
+    - graphql codegen

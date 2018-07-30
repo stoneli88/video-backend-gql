@@ -1,0 +1,27 @@
+{
+  "name": "video-express",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "dependencies": {
+    "graphql": "^0.13.2",
+    "bcryptjs": "^2.4.3",
+    "graphql-yoga": "^1.14.10",
+    "jsonwebtoken": "^8.3.0",
+    "prisma-binding": "^2.1.1"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "npm-run-all --parallel start playground",
+    "playground": "graphql playground",
+    "prisma": "prisma",
+    "graphql": "graphql"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "graphql-cli": "^2.16.4",
+    "npm-run-all": "^4.1.2",
+    "prisma": "^1.12.0"
+  }
+}
