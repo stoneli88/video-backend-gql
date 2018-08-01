@@ -1,5 +1,5 @@
 # source: http://localhost:4466/video
-# timestamp: Tue Jul 31 2018 16:53:35 GMT+0800 (马来西亚半岛标准时间)
+# timestamp: Wed Aug 01 2018 19:16:29 GMT+0800 (马来西亚半岛标准时间)
 
 type AggregateCategory {
   count: Int!
@@ -231,24 +231,24 @@ Long can represent values between -(2^63) and 2^63 - 1.
 scalar Long
 
 type Mutation {
+  createUser(data: UserCreateInput!): User!
   createVideo(data: VideoCreateInput!): Video!
   createCategory(data: CategoryCreateInput!): Category!
-  createUser(data: UserCreateInput!): User!
+  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateVideo(data: VideoUpdateInput!, where: VideoWhereUniqueInput!): Video
   updateCategory(data: CategoryUpdateInput!, where: CategoryWhereUniqueInput!): Category
-  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  deleteUser(where: UserWhereUniqueInput!): User
   deleteVideo(where: VideoWhereUniqueInput!): Video
   deleteCategory(where: CategoryWhereUniqueInput!): Category
-  deleteUser(where: UserWhereUniqueInput!): User
+  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertVideo(where: VideoWhereUniqueInput!, create: VideoCreateInput!, update: VideoUpdateInput!): Video!
   upsertCategory(where: CategoryWhereUniqueInput!, create: CategoryCreateInput!, update: CategoryUpdateInput!): Category!
-  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
   updateManyVideos(data: VideoUpdateInput!, where: VideoWhereInput): BatchPayload!
   updateManyCategories(data: CategoryUpdateInput!, where: CategoryWhereInput): BatchPayload!
-  updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
+  deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyVideos(where: VideoWhereInput): BatchPayload!
   deleteManyCategories(where: CategoryWhereInput): BatchPayload!
-  deleteManyUsers(where: UserWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -279,15 +279,15 @@ type PageInfo {
 }
 
 type Query {
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   videos(where: VideoWhereInput, orderBy: VideoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Video]!
   categories(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Category]!
-  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  user(where: UserWhereUniqueInput!): User
   video(where: VideoWhereUniqueInput!): Video
   category(where: CategoryWhereUniqueInput!): Category
-  user(where: UserWhereUniqueInput!): User
+  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   videosConnection(where: VideoWhereInput, orderBy: VideoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): VideoConnection!
   categoriesConnection(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CategoryConnection!
-  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -297,9 +297,9 @@ type Query {
 }
 
 type Subscription {
+  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   video(where: VideoSubscriptionWhereInput): VideoSubscriptionPayload
   category(where: CategorySubscriptionWhereInput): CategorySubscriptionPayload
-  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 
 type User implements Node {
@@ -309,6 +309,7 @@ type User implements Node {
   email: String!
   password: String!
   name: String!
+  video(where: VideoWhereInput, orderBy: VideoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Video!]
 }
 
 """A connection to a list of items."""
@@ -325,11 +326,18 @@ input UserCreateInput {
   email: String!
   password: String!
   name: String!
+  video: VideoCreateManyWithoutOwnerInput
 }
 
-input UserCreateOneInput {
-  create: UserCreateInput
+input UserCreateOneWithoutVideoInput {
+  create: UserCreateWithoutVideoInput
   connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutVideoInput {
+  email: String!
+  password: String!
+  name: String!
 }
 
 """An edge in a connection."""
@@ -404,29 +412,30 @@ input UserSubscriptionWhereInput {
   node: UserWhereInput
 }
 
-input UserUpdateDataInput {
-  email: String
-  password: String
-  name: String
-}
-
 input UserUpdateInput {
   email: String
   password: String
   name: String
+  video: VideoUpdateManyWithoutOwnerInput
 }
 
-input UserUpdateOneInput {
-  create: UserCreateInput
+input UserUpdateOneWithoutVideoInput {
+  create: UserCreateWithoutVideoInput
   connect: UserWhereUniqueInput
   delete: Boolean
-  update: UserUpdateDataInput
-  upsert: UserUpsertNestedInput
+  update: UserUpdateWithoutVideoDataInput
+  upsert: UserUpsertWithoutVideoInput
 }
 
-input UserUpsertNestedInput {
-  update: UserUpdateDataInput!
-  create: UserCreateInput!
+input UserUpdateWithoutVideoDataInput {
+  email: String
+  password: String
+  name: String
+}
+
+input UserUpsertWithoutVideoInput {
+  update: UserUpdateWithoutVideoDataInput!
+  create: UserCreateWithoutVideoInput!
 }
 
 input UserWhereInput {
@@ -642,6 +651,9 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   name_not_ends_with: String
+  video_every: VideoWhereInput
+  video_some: VideoWhereInput
+  video_none: VideoWhereInput
 }
 
 input UserWhereUniqueInput {
@@ -657,6 +669,8 @@ type Video implements Node {
   category(where: CategoryWhereInput): Category!
   owner(where: UserWhereInput): User!
   isEncoded: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 """A connection to a list of items."""
@@ -675,7 +689,20 @@ input VideoCreateInput {
   path: String!
   isEncoded: Boolean
   category: CategoryCreateOneInput!
-  owner: UserCreateOneInput!
+  owner: UserCreateOneWithoutVideoInput!
+}
+
+input VideoCreateManyWithoutOwnerInput {
+  create: [VideoCreateWithoutOwnerInput!]
+  connect: [VideoWhereUniqueInput!]
+}
+
+input VideoCreateWithoutOwnerInput {
+  name: String!
+  description: String!
+  path: String!
+  isEncoded: Boolean
+  category: CategoryCreateOneInput!
 }
 
 """An edge in a connection."""
@@ -698,10 +725,10 @@ enum VideoOrderByInput {
   path_DESC
   isEncoded_ASC
   isEncoded_DESC
-  updatedAt_ASC
-  updatedAt_DESC
   createdAt_ASC
   createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type VideoPreviousValues {
@@ -710,6 +737,8 @@ type VideoPreviousValues {
   description: String!
   path: String!
   isEncoded: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type VideoSubscriptionPayload {
@@ -757,7 +786,35 @@ input VideoUpdateInput {
   path: String
   isEncoded: Boolean
   category: CategoryUpdateOneInput
-  owner: UserUpdateOneInput
+  owner: UserUpdateOneWithoutVideoInput
+}
+
+input VideoUpdateManyWithoutOwnerInput {
+  create: [VideoCreateWithoutOwnerInput!]
+  connect: [VideoWhereUniqueInput!]
+  disconnect: [VideoWhereUniqueInput!]
+  delete: [VideoWhereUniqueInput!]
+  update: [VideoUpdateWithWhereUniqueWithoutOwnerInput!]
+  upsert: [VideoUpsertWithWhereUniqueWithoutOwnerInput!]
+}
+
+input VideoUpdateWithoutOwnerDataInput {
+  name: String
+  description: String
+  path: String
+  isEncoded: Boolean
+  category: CategoryUpdateOneInput
+}
+
+input VideoUpdateWithWhereUniqueWithoutOwnerInput {
+  where: VideoWhereUniqueInput!
+  data: VideoUpdateWithoutOwnerDataInput!
+}
+
+input VideoUpsertWithWhereUniqueWithoutOwnerInput {
+  where: VideoWhereUniqueInput!
+  update: VideoUpdateWithoutOwnerDataInput!
+  create: VideoCreateWithoutOwnerInput!
 }
 
 input VideoWhereInput {
@@ -933,6 +990,50 @@ input VideoWhereInput {
 
   """All values that are not equal to given value."""
   isEncoded_not: Boolean
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
   category: CategoryWhereInput
   owner: UserWhereInput
 }

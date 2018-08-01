@@ -5,6 +5,7 @@ type User {
   email: String! @unique
   password: String!
   name: String!
+  video: [Video!]!
 }
 
 type Category {
@@ -20,4 +21,6 @@ type Video {
   category: Category!
   owner: User!
   isEncoded: Boolean! @default(value: "false")
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }

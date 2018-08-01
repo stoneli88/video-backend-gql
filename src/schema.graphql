@@ -1,5 +1,30 @@
+# import VideoOrderByInput from "./generated/prisma.graphql"
+
+type Video {
+  id: ID!
+  name: String!
+  description: String!
+  category: Category!
+  owner: User!
+  isEncoded: Boolean!
+  createdAt: DateTime!
+}
+
+type User {
+  id: ID!
+  email: String!
+  name: String!
+  videos: [Video]
+}
+
 type Query {
   me: User
+  videos(
+    filter: String
+    skip: Int
+    first: Int
+    orderBy: VideoOrderByInput
+  ): [Video]
 }
 
 type Mutation {
@@ -10,12 +35,4 @@ type Mutation {
 type AuthPayload {
   token: String!
   user: User!
-}
-
-# The `User` type is a reduced version ("mask") of the `User` type from the data model (and database schema).
-# It does not expose the `createdAt`, `updatedAt` and `password` fields.
-type User {
-  id: ID!
-  email: String!
-  name: String
 }

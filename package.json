@@ -4,10 +4,11 @@
   "description": "",
   "main": "server.js",
   "dependencies": {
-    "graphql": "^0.13.2",
     "bcryptjs": "^2.4.3",
+    "graphql": "^0.13.2",
     "graphql-yoga": "^1.14.10",
     "jsonwebtoken": "^8.3.0",
+    "lodash": "^4.17.10",
     "prisma-binding": "^2.1.1"
   },
   "scripts": {

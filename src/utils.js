@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken");
-const { Prisma } = require("prisma-binding");
 
 const APP_SECRET = "dmlkZW8=";
 
