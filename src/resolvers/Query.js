@@ -16,7 +16,6 @@ async function videos(parent, args, context, info) {
       if (key === "name") {
         where["AND:"] = [{ name: args.filter.name }];
       }
-      
     });
   }
 
@@ -35,6 +34,7 @@ async function videos(parent, args, context, info) {
         name
         email
       }
+      isEncoded
       createdAt
     }`
   );
