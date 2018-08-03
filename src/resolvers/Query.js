@@ -1,8 +1,13 @@
-const getUserId = require("../utils");
+const { getUserId } = require("../utils");
 
 async function me(parent, args, ctx, info) {
   const id = getUserId(ctx);
   return ctx.db.query.user({ where: { id } }, info);
+}
+
+async function categories(parent, args, context, info) {
+  const queriedVideos = await context.db.query.categories({}, `{ id name }`);
+  return queriedVideos;
 }
 
 async function videos(parent, args, context, info) {
@@ -44,5 +49,6 @@ async function videos(parent, args, context, info) {
 
 module.exports = {
   me,
+  categories,
   videos
 };

@@ -19,6 +19,7 @@ type User {
 
 type Query {
   me: User
+  categories: [Category]!
   videos(
     filter: String
     skip: Int
@@ -30,6 +31,7 @@ type Query {
 type Mutation {
   signup(email: String!, password: String!, name: String!): AuthPayload!
   login(email: String!, password: String!): AuthPayload!
+  createOrUpdateVideo(id: ID, name: String, description: String, category: String, isEncoded: Boolean, path: String): Video!
 }
 
 type AuthPayload {

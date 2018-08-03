@@ -15,12 +15,17 @@ type Category {
 
 type Video {
   id: ID! @unique
+  file: UploadedVideo
   name: String!
   description: String!
-  path: String!
   category: Category!
   owner: User!
   isEncoded: Boolean! @default(value: "false")
   createdAt: DateTime!
   updatedAt: DateTime!
+}
+
+type UploadedVideo {
+  id: ID! @unique
+  path: String! @default(value: "")
 }
