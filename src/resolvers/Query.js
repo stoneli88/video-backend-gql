@@ -14,12 +14,16 @@ async function videos(parent, args, context, info) {
   let where = {};
   if (args.filter) {
     const filterObj = JSON.parse(args.filter);
-    Object.keys(filterObj, key => {
+
+    Object.keys(filterObj).forEach(key => {
+      if (key === "id") {
+        where["AND"] = [{ id: filterObj.id }];
+      }
       if (key === "email") {
-        where["AND:"] = [{ owner: { email: args.filter.email } }];
+        where["AND"] = [{ email: filterObj.email }];
       }
       if (key === "name") {
-        where["AND:"] = [{ name: args.filter.name }];
+        where["AND"] = [{ name: filterObj.name }];
       }
     });
   }
@@ -39,6 +43,7 @@ async function videos(parent, args, context, info) {
         name
         email
       }
+      path
       isEncoded
       createdAt
     }`

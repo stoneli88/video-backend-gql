@@ -1,5 +1,5 @@
 # source: http://localhost:4466/video
-# timestamp: Wed Aug 01 2018 19:16:29 GMT+0800 (马来西亚半岛标准时间)
+# timestamp: Mon Aug 06 2018 17:50:30 GMT+0800 (马来西亚半岛标准时间)
 
 type AggregateCategory {
   count: Int!
@@ -686,7 +686,7 @@ type VideoConnection {
 input VideoCreateInput {
   name: String!
   description: String!
-  path: String!
+  path: String
   isEncoded: Boolean
   category: CategoryCreateOneInput!
   owner: UserCreateOneWithoutVideoInput!
@@ -700,7 +700,7 @@ input VideoCreateManyWithoutOwnerInput {
 input VideoCreateWithoutOwnerInput {
   name: String!
   description: String!
-  path: String!
+  path: String
   isEncoded: Boolean
   category: CategoryCreateOneInput!
 }

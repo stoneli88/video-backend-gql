@@ -6,6 +6,7 @@ type Video {
   description: String!
   category: Category!
   owner: User!
+  path: String!
   isEncoded: Boolean!
   createdAt: DateTime!
 }
