@@ -1,5 +1,15 @@
 version: '3'
 services:
+  redis:
+    image: 'bitnami/redis:latest'
+    environment:
+      # ALLOW_EMPTY_PASSWORD is recommended only for development.
+      - ALLOW_EMPTY_PASSWORD=yes
+      - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
+    ports:
+      - '6379:6379'
+    volumes:
+      - 'redis_data:/bitnami/redis'
   prisma:
     image: prismagraphql/prisma:1.12
     restart: always
@@ -27,3 +37,5 @@ services:
       - mysql:/var/lib/mysql
 volumes:
   mysql:
+  redis_data:
+    driver: local
