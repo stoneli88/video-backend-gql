@@ -1,5 +1,5 @@
 # source: http://localhost:4466/video
-# timestamp: Mon Aug 06 2018 17:50:30 GMT+0800 (马来西亚半岛标准时间)
+# timestamp: Fri Aug 10 2018 14:09:52 GMT+0800 (菲律宾标准时间)
 
 type AggregateCategory {
   count: Int!
@@ -663,6 +663,7 @@ input UserWhereUniqueInput {
 
 type Video implements Node {
   id: ID!
+  uuid: String!
   name: String!
   description: String!
   path: String!
@@ -684,6 +685,7 @@ type VideoConnection {
 }
 
 input VideoCreateInput {
+  uuid: String!
   name: String!
   description: String!
   path: String
@@ -698,6 +700,7 @@ input VideoCreateManyWithoutOwnerInput {
 }
 
 input VideoCreateWithoutOwnerInput {
+  uuid: String!
   name: String!
   description: String!
   path: String
@@ -717,6 +720,8 @@ type VideoEdge {
 enum VideoOrderByInput {
   id_ASC
   id_DESC
+  uuid_ASC
+  uuid_DESC
   name_ASC
   name_DESC
   description_ASC
@@ -733,6 +738,7 @@ enum VideoOrderByInput {
 
 type VideoPreviousValues {
   id: ID!
+  uuid: String!
   name: String!
   description: String!
   path: String!
@@ -781,6 +787,7 @@ input VideoSubscriptionWhereInput {
 }
 
 input VideoUpdateInput {
+  uuid: String
   name: String
   description: String
   path: String
@@ -799,6 +806,7 @@ input VideoUpdateManyWithoutOwnerInput {
 }
 
 input VideoUpdateWithoutOwnerDataInput {
+  uuid: String
   name: String
   description: String
   path: String
@@ -866,6 +874,46 @@ input VideoWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
+  uuid: String
+
+  """All values that are not equal to given value."""
+  uuid_not: String
+
+  """All values that are contained in given list."""
+  uuid_in: [String!]
+
+  """All values that are not contained in given list."""
+  uuid_not_in: [String!]
+
+  """All values less than the given value."""
+  uuid_lt: String
+
+  """All values less than or equal the given value."""
+  uuid_lte: String
+
+  """All values greater than the given value."""
+  uuid_gt: String
+
+  """All values greater than or equal the given value."""
+  uuid_gte: String
+
+  """All values containing the given string."""
+  uuid_contains: String
+
+  """All values not containing the given string."""
+  uuid_not_contains: String
+
+  """All values starting with the given string."""
+  uuid_starts_with: String
+
+  """All values not starting with the given string."""
+  uuid_not_starts_with: String
+
+  """All values ending with the given string."""
+  uuid_ends_with: String
+
+  """All values not ending with the given string."""
+  uuid_not_ends_with: String
   name: String
 
   """All values that are not equal to given value."""

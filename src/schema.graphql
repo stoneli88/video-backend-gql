@@ -2,6 +2,7 @@
 
 type Video {
   id: ID!
+  uuid: String!
   name: String!
   description: String!
   category: Category!
@@ -32,7 +33,7 @@ type Query {
 type Mutation {
   signup(email: String!, password: String!, name: String!): AuthPayload!
   login(email: String!, password: String!): AuthPayload!
-  createOrUpdateVideo(id: ID, name: String, description: String, category: String, isEncoded: Boolean, path: String): Video!
+  createOrUpdateVideo(id: ID, uuid:String, name: String, description: String, category: String, isEncoded: Boolean, path: String): Video!
 }
 
 type AuthPayload {

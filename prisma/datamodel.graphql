@@ -15,6 +15,7 @@ type Category {
 
 type Video {
   id: ID! @unique
+  uuid: String!
   name: String!
   description: String!
   path: String! @default(value: "")
