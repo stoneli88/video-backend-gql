@@ -32,6 +32,7 @@ async function videos(parent, args, context, info) {
     { where, skip: args.skip, first: args.first, orderBy: args.orderBy },
     `{ 
       id,
+      uuid,
       name,
       description,
       category {
@@ -46,6 +47,7 @@ async function videos(parent, args, context, info) {
       path
       isEncoded
       createdAt
+      updatedAt
     }`
   );
 

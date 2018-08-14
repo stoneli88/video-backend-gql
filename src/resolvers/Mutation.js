@@ -36,10 +36,10 @@ async function login(parent, args, context, info) {
 	};
 }
 
-async function createOrUpdateVideo(parent, args, context, info) {
-	let createOrUpdatedVideo;
+async function createVideo(parent, args, context, info) {
+	let createVideo;
 	const needUpdateParams = {};
-	const { id, uuid, path, name, description, category, isEncoded } = args;
+	const { uuid, path, name, description, category, isEncoded } = args;
 
 	if (name) {
 		needUpdateParams['name'] = name;
@@ -62,24 +62,34 @@ async function createOrUpdateVideo(parent, args, context, info) {
 
 	needUpdateParams['owner'] = { connect: { id: getUserId(context) } };
 
-	if (id) {
-		const video = await context.db.query.video({ where: { id: args.id } }, `{ id name }`);
-		if (!video) {
-			throw new Error('No such video found');
-		}
-		createOrUpdatedVideo = await context.db.mutation.updateVideo(
-			{ where: { id: args.id }, data: needUpdateParams },
-			`{ id name }`
-		);
-	} else {
-		createOrUpdatedVideo = await context.db.mutation.createVideo({ data: needUpdateParams }, `{ id }`);
-	}
+	createVideo = await context.db.mutation.createVideo({ data: needUpdateParams }, `{ id }`);
 
-	return createOrUpdatedVideo;
+	return createVideo;
+}
+
+async function updateVideo(parent, args, context, info) {
+	const video = await context.db.query.video({ where: { id: args.id } }, `{ id }`);
+	const needUpdateParams = {};
+	const { uuid, path, name, description, category, isEncoded } = args;
+
+	if (!video) { throw new Error('No such video found'); }
+
+	if (name) { needUpdateParams['name'] = name; }
+	if (description) { needUpdateParams['description'] = description; }
+	if (category) { needUpdateParams['category'] = { connect: { id: category } }; }
+	if (isEncoded) { needUpdateParams['isEncoded'] = isEncoded; }
+	if (uuid) { needUpdateParams['uuid'] = uuid; }
+	if (path) { needUpdateParams['path'] = path; }
+
+	updatedVideo = await context.db.mutation.updateVideo(
+		{ where: { id: args.id }, data: needUpdateParams },
+		`{ id }`
+	);
 }
 
 module.exports = {
 	signup,
 	login,
-	createOrUpdateVideo
+	createVideo,
+	updateVideo
 };
