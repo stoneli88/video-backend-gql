@@ -36,6 +36,7 @@ type Mutation {
   login(email: String!, password: String!): AuthPayload!
   createVideo(uuid:String, name: String, description: String, category: String, isEncoded: Boolean, path: String): Video!
   updateVideo(id:String!, uuid:String, name: String, description: String, category: String, isEncoded: Boolean, path: String): Video!
+  removeVideo(id:String!): Video!
 }
 
 type AuthPayload {

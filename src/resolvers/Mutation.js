@@ -77,19 +77,36 @@ async function updateVideo(parent, args, context, info) {
 	if (name) { needUpdateParams['name'] = name; }
 	if (description) { needUpdateParams['description'] = description; }
 	if (category) { needUpdateParams['category'] = { connect: { id: category } }; }
-	if (isEncoded) { needUpdateParams['isEncoded'] = isEncoded; }
-	if (uuid) { needUpdateParams['uuid'] = uuid; }
-	if (path) { needUpdateParams['path'] = path; }
+	if (isEncoded !== null) { needUpdateParams['isEncoded'] = isEncoded; }
+	if (uuid !== null) { needUpdateParams['uuid'] = uuid; }
+	if (path !== null) { needUpdateParams['path'] = path; }
 
-	updatedVideo = await context.db.mutation.updateVideo(
+	const updatedVideo = await context.db.mutation.updateVideo(
 		{ where: { id: args.id }, data: needUpdateParams },
 		`{ id }`
 	);
+
+	return updatedVideo;
+}
+
+async function removeVideo(parent, args, context, info) {
+	const { id } = args;
+	const video = await context.db.query.video({ where: { id } }, `{ id }`);
+	
+	if (!video) { throw new Error('No such video found'); }
+
+	const deletedVideo = await context.db.mutation.deleteVideo(
+		{ where: { id: args.id } },
+		`{ id }`
+	);
+
+	return deletedVideo;
 }
 
 module.exports = {
 	signup,
 	login,
 	createVideo,
-	updateVideo
+	updateVideo,
+	removeVideo
 };
