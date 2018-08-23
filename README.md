@@ -1,6 +1,6 @@
-# Video Backend Server
+# Backend Server
 
-This Server implement a GraphQL server with an email-password-based authentication workflow based on Prisma & [graphql-yoga](https://github.com/graphcool/graphql-yoga).
+This Server implement a GraphQL server with an user-password-based authentication workflow based on Prisma & [graphql-yoga](https://github.com/graphcool/graphql-yoga).
 
 ## Get started
 

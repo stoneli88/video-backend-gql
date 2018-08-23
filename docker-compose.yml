@@ -1,5 +1,15 @@
 version: '3'
 services:
+  rsync:
+    build: ./docker-image/rsync-deploy
+    restart: always
+    ports:
+      - "2222:22"
+      - "9080:80"
+    environment:
+      DEPLOY_KEY_URL: http://172.16.18.99/malik.l.keys
+    volumes:
+      - rsync:/rsync
   redis:
     image: 'bitnami/redis:latest'
     environment:
@@ -37,5 +47,12 @@ services:
       - mysql:/var/lib/mysql
 volumes:
   mysql:
+    driver: local
   redis_data:
     driver: local
+  rsync:
+    driver: local
+    driver_opts:
+         type: None
+         device: $HOME/Work/tmp/rsync
+         o: bind
