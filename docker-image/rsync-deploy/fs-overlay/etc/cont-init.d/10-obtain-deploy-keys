@@ -1,0 +1,9 @@
+#!/usr/bin/with-contenv sh
+
+if ! [ -z "$DEPLOY_KEY_URL" ]; then
+  mkdir -p /home/rsync/.ssh && curl $DEPLOY_KEY_URL > /home/rsync/.ssh/authorized_keys
+  chown rsync /home/rsync/.ssh/
+  chown rsync /home/rsync/.ssh/authorized_keys
+  chmod 700 /home/rsync/.ssh/
+  chmod 600 /home/rsync/.ssh/authorized_keys
+fi

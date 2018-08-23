@@ -1,0 +1,7 @@
+rsync-deploy:
+  build: ./
+  ports:
+    - "2222:22"
+    - "8080:80"
+  environment:
+    DEPLOY_KEY_URL: https://github.com/steveltn.keys
