@@ -60,45 +60,44 @@ yarn playground
 
 Or you can open a Playground by navigating to [http://localhost:4000](http://localhost:4000) in your browser.
 
-#### Register a new user with the `signup` mutation
 
-You can send the following mutation in the Playground to create a new `User` node and at the same time retrieve an authentication token for it:
+### Database Schema
 
-```graphql
-mutation {
-  signup(email: "alice@prisma.io", password: "graphql") {
-    token
-  }
-}
-```
+#### Video
+`
+"vid":"39271",
+"uid":"1",
+"title":"video's title",
+"keyword":"video's keywords",
+"channel":"2",
+"duration":7063.39,
+"framerate":29.97,
+"hd":true,
+"addtime":1491800115,
+"viewnumber":50,
+"likes":0,
+"dislikes":0,
+"video_url":"https://video-name",
+"preview_url":"https://video.jpg"
+`
 
-#### Logging in an existing user with the `login` mutation
+#### Categories
+`
+"CHID":"1",
+"name":"category name",
+"slug":"category",
+"total_videos":350,
+"category_url":"",
+"cover_url":""
+`
+#### Collections
+`
+ "id":"1",
+"title":"name",
+"keyword":"name",
+"cover_url":"",
+"total_views":204011,
+"video_count":17,
+"collection_url":""
+`
 
-This mutation will log in an _existing_ user by requesting a new authentication token for her:
-
-```graphql
-mutation {
-  login(email: "alice@prisma.io", password: "graphql") {
-    token
-  }
-}
-```
-
-#### Checking whether a user is currently logged in with the `me` query
-
-For this query, you need to make sure a valid authentication token is sent along with the `Bearer`-prefix in the `Authorization` header of the request. Inside the Playground, you can set HTTP headers in the bottom-left corner:
-
-![](https://imgur.com/bEGUtO0.png)
-
-Once you've set the header, you can send the following query to check whether the token is valid:
-
-```graphql
-{
-  me {
-    id
-    email
-  }
-}
-```
-
-If the token is valid, the server will return the `id` and `email` of the `User` node that it belongs to.
