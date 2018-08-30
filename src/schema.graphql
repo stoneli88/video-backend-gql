@@ -8,7 +8,7 @@ type Video {
   category: Category!
   owner: User!
   path: String!
-  isEncoded: Boolean!
+  isEncoded: String!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -34,8 +34,8 @@ type Query {
 type Mutation {
   signup(email: String!, password: String!, name: String!): AuthPayload!
   login(email: String!, password: String!): AuthPayload!
-  createVideo(uuid:String, name: String, description: String, category: String, isEncoded: Boolean, path: String): Video!
-  updateVideo(id:String!, uuid:String, name: String, description: String, category: String, isEncoded: Boolean, path: String): Video!
+  createVideo(uuid:String, name: String, description: String, category: String, isEncoded: String, path: String): Video!
+  updateVideo(id:String!, uuid:String, name: String, description: String, category: String, isEncoded: String, path: String): Video!
   removeVideo(id:String!): Video!
 }
 

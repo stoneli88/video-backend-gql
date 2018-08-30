@@ -21,7 +21,7 @@ type Video {
   path: String! @default(value: "")
   category: Category!
   owner: User!
-  isEncoded: Boolean! @default(value: "false")
+  isEncoded: String! @default(value: "No")
   createdAt: DateTime!
   updatedAt: DateTime!
 }
