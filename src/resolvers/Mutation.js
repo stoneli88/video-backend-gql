@@ -41,24 +41,12 @@ async function createVideo(parent, args, context, info) {
 	const needUpdateParams = {};
 	const { uuid, path, name, description, category, isEncoded } = args;
 
-	if (name) {
-		needUpdateParams['name'] = name;
-	}
-	if (description) {
-		needUpdateParams['description'] = description;
-	}
-	if (category) {
-		needUpdateParams['category'] = { connect: { id: category } };
-	}
-	if (isEncoded) {
-		needUpdateParams['isEncoded'] = isEncoded;
-	}
-	if (uuid) {
-		needUpdateParams['uuid'] = uuid;
-	}
-	if (path) {
-		needUpdateParams['path'] = path;
-	}
+	if (name) { needUpdateParams['name'] = name; }
+	if (description) { needUpdateParams['description'] = description; }
+	if (category) { needUpdateParams['category'] = { connect: { id: category } }; }
+	if (isEncoded) { needUpdateParams['isEncoded'] = isEncoded; }
+	if (uuid) { needUpdateParams['uuid'] = uuid; }
+	if (path) { needUpdateParams['path'] = path; }
 
 	needUpdateParams['owner'] = { connect: { id: getUserId(context) } };
 

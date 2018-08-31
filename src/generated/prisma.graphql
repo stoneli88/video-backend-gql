@@ -1,5 +1,5 @@
 # source: http://localhost:4466/video
-# timestamp: Fri Aug 10 2018 14:09:52 GMT+0800 (菲律宾标准时间)
+# timestamp: Fri Aug 31 2018 14:49:52 GMT+0800 (菲律宾标准时间)
 
 type AggregateCategory {
   count: Int!
@@ -669,7 +669,7 @@ type Video implements Node {
   path: String!
   category(where: CategoryWhereInput): Category!
   owner(where: UserWhereInput): User!
-  isEncoded: Boolean!
+  isEncoded: String!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -689,7 +689,7 @@ input VideoCreateInput {
   name: String!
   description: String!
   path: String
-  isEncoded: Boolean
+  isEncoded: String
   category: CategoryCreateOneInput!
   owner: UserCreateOneWithoutVideoInput!
 }
@@ -704,7 +704,7 @@ input VideoCreateWithoutOwnerInput {
   name: String!
   description: String!
   path: String
-  isEncoded: Boolean
+  isEncoded: String
   category: CategoryCreateOneInput!
 }
 
@@ -742,7 +742,7 @@ type VideoPreviousValues {
   name: String!
   description: String!
   path: String!
-  isEncoded: Boolean!
+  isEncoded: String!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -791,7 +791,7 @@ input VideoUpdateInput {
   name: String
   description: String
   path: String
-  isEncoded: Boolean
+  isEncoded: String
   category: CategoryUpdateOneInput
   owner: UserUpdateOneWithoutVideoInput
 }
@@ -810,7 +810,7 @@ input VideoUpdateWithoutOwnerDataInput {
   name: String
   description: String
   path: String
-  isEncoded: Boolean
+  isEncoded: String
   category: CategoryUpdateOneInput
 }
 
@@ -1034,10 +1034,46 @@ input VideoWhereInput {
 
   """All values not ending with the given string."""
   path_not_ends_with: String
-  isEncoded: Boolean
+  isEncoded: String
 
   """All values that are not equal to given value."""
-  isEncoded_not: Boolean
+  isEncoded_not: String
+
+  """All values that are contained in given list."""
+  isEncoded_in: [String!]
+
+  """All values that are not contained in given list."""
+  isEncoded_not_in: [String!]
+
+  """All values less than the given value."""
+  isEncoded_lt: String
+
+  """All values less than or equal the given value."""
+  isEncoded_lte: String
+
+  """All values greater than the given value."""
+  isEncoded_gt: String
+
+  """All values greater than or equal the given value."""
+  isEncoded_gte: String
+
+  """All values containing the given string."""
+  isEncoded_contains: String
+
+  """All values not containing the given string."""
+  isEncoded_not_contains: String
+
+  """All values starting with the given string."""
+  isEncoded_starts_with: String
+
+  """All values not starting with the given string."""
+  isEncoded_not_starts_with: String
+
+  """All values ending with the given string."""
+  isEncoded_ends_with: String
+
+  """All values not ending with the given string."""
+  isEncoded_not_ends_with: String
   createdAt: DateTime
 
   """All values that are not equal to given value."""
