@@ -1,7 +1,11 @@
 # source: http://localhost:4466/video
-# timestamp: Fri Aug 31 2018 14:49:52 GMT+0800 (菲律宾标准时间)
+# timestamp: Thu Sep 06 2018 15:24:46 GMT+0800 (菲律宾标准时间)
 
 type AggregateCategory {
+  count: Int!
+}
+
+type AggregateCollections {
   count: Int!
 }
 
@@ -21,6 +25,8 @@ type BatchPayload {
 type Category implements Node {
   id: ID!
   name: String!
+  total_videos: String!
+  cover_url: String!
 }
 
 """A connection to a list of items."""
@@ -35,6 +41,8 @@ type CategoryConnection {
 
 input CategoryCreateInput {
   name: String!
+  total_videos: String
+  cover_url: String
 }
 
 input CategoryCreateOneInput {
@@ -56,6 +64,10 @@ enum CategoryOrderByInput {
   id_DESC
   name_ASC
   name_DESC
+  total_videos_ASC
+  total_videos_DESC
+  cover_url_ASC
+  cover_url_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -65,6 +77,8 @@ enum CategoryOrderByInput {
 type CategoryPreviousValues {
   id: ID!
   name: String!
+  total_videos: String!
+  cover_url: String!
 }
 
 type CategorySubscriptionPayload {
@@ -108,10 +122,14 @@ input CategorySubscriptionWhereInput {
 
 input CategoryUpdateDataInput {
   name: String
+  total_videos: String
+  cover_url: String
 }
 
 input CategoryUpdateInput {
   name: String
+  total_videos: String
+  cover_url: String
 }
 
 input CategoryUpdateOneInput {
@@ -216,10 +234,504 @@ input CategoryWhereInput {
 
   """All values not ending with the given string."""
   name_not_ends_with: String
+  total_videos: String
+
+  """All values that are not equal to given value."""
+  total_videos_not: String
+
+  """All values that are contained in given list."""
+  total_videos_in: [String!]
+
+  """All values that are not contained in given list."""
+  total_videos_not_in: [String!]
+
+  """All values less than the given value."""
+  total_videos_lt: String
+
+  """All values less than or equal the given value."""
+  total_videos_lte: String
+
+  """All values greater than the given value."""
+  total_videos_gt: String
+
+  """All values greater than or equal the given value."""
+  total_videos_gte: String
+
+  """All values containing the given string."""
+  total_videos_contains: String
+
+  """All values not containing the given string."""
+  total_videos_not_contains: String
+
+  """All values starting with the given string."""
+  total_videos_starts_with: String
+
+  """All values not starting with the given string."""
+  total_videos_not_starts_with: String
+
+  """All values ending with the given string."""
+  total_videos_ends_with: String
+
+  """All values not ending with the given string."""
+  total_videos_not_ends_with: String
+  cover_url: String
+
+  """All values that are not equal to given value."""
+  cover_url_not: String
+
+  """All values that are contained in given list."""
+  cover_url_in: [String!]
+
+  """All values that are not contained in given list."""
+  cover_url_not_in: [String!]
+
+  """All values less than the given value."""
+  cover_url_lt: String
+
+  """All values less than or equal the given value."""
+  cover_url_lte: String
+
+  """All values greater than the given value."""
+  cover_url_gt: String
+
+  """All values greater than or equal the given value."""
+  cover_url_gte: String
+
+  """All values containing the given string."""
+  cover_url_contains: String
+
+  """All values not containing the given string."""
+  cover_url_not_contains: String
+
+  """All values starting with the given string."""
+  cover_url_starts_with: String
+
+  """All values not starting with the given string."""
+  cover_url_not_starts_with: String
+
+  """All values ending with the given string."""
+  cover_url_ends_with: String
+
+  """All values not ending with the given string."""
+  cover_url_not_ends_with: String
 }
 
 input CategoryWhereUniqueInput {
   id: ID
+  name: String
+}
+
+type Collections implements Node {
+  id: ID!
+  title: String!
+  keyword: String!
+  cover_url: String!
+  total_views: String!
+  video_count: String!
+  collection_url: String!
+}
+
+"""A connection to a list of items."""
+type CollectionsConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [CollectionsEdge]!
+  aggregate: AggregateCollections!
+}
+
+input CollectionsCreateInput {
+  title: String!
+  keyword: String
+  cover_url: String
+  total_views: String
+  video_count: String
+  collection_url: String
+}
+
+"""An edge in a connection."""
+type CollectionsEdge {
+  """The item at the end of the edge."""
+  node: Collections!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum CollectionsOrderByInput {
+  id_ASC
+  id_DESC
+  title_ASC
+  title_DESC
+  keyword_ASC
+  keyword_DESC
+  cover_url_ASC
+  cover_url_DESC
+  total_views_ASC
+  total_views_DESC
+  video_count_ASC
+  video_count_DESC
+  collection_url_ASC
+  collection_url_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type CollectionsPreviousValues {
+  id: ID!
+  title: String!
+  keyword: String!
+  cover_url: String!
+  total_views: String!
+  video_count: String!
+  collection_url: String!
+}
+
+type CollectionsSubscriptionPayload {
+  mutation: MutationType!
+  node: Collections
+  updatedFields: [String!]
+  previousValues: CollectionsPreviousValues
+}
+
+input CollectionsSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CollectionsSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CollectionsSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CollectionsSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: CollectionsWhereInput
+}
+
+input CollectionsUpdateInput {
+  title: String
+  keyword: String
+  cover_url: String
+  total_views: String
+  video_count: String
+  collection_url: String
+}
+
+input CollectionsWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CollectionsWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CollectionsWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CollectionsWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  title: String
+
+  """All values that are not equal to given value."""
+  title_not: String
+
+  """All values that are contained in given list."""
+  title_in: [String!]
+
+  """All values that are not contained in given list."""
+  title_not_in: [String!]
+
+  """All values less than the given value."""
+  title_lt: String
+
+  """All values less than or equal the given value."""
+  title_lte: String
+
+  """All values greater than the given value."""
+  title_gt: String
+
+  """All values greater than or equal the given value."""
+  title_gte: String
+
+  """All values containing the given string."""
+  title_contains: String
+
+  """All values not containing the given string."""
+  title_not_contains: String
+
+  """All values starting with the given string."""
+  title_starts_with: String
+
+  """All values not starting with the given string."""
+  title_not_starts_with: String
+
+  """All values ending with the given string."""
+  title_ends_with: String
+
+  """All values not ending with the given string."""
+  title_not_ends_with: String
+  keyword: String
+
+  """All values that are not equal to given value."""
+  keyword_not: String
+
+  """All values that are contained in given list."""
+  keyword_in: [String!]
+
+  """All values that are not contained in given list."""
+  keyword_not_in: [String!]
+
+  """All values less than the given value."""
+  keyword_lt: String
+
+  """All values less than or equal the given value."""
+  keyword_lte: String
+
+  """All values greater than the given value."""
+  keyword_gt: String
+
+  """All values greater than or equal the given value."""
+  keyword_gte: String
+
+  """All values containing the given string."""
+  keyword_contains: String
+
+  """All values not containing the given string."""
+  keyword_not_contains: String
+
+  """All values starting with the given string."""
+  keyword_starts_with: String
+
+  """All values not starting with the given string."""
+  keyword_not_starts_with: String
+
+  """All values ending with the given string."""
+  keyword_ends_with: String
+
+  """All values not ending with the given string."""
+  keyword_not_ends_with: String
+  cover_url: String
+
+  """All values that are not equal to given value."""
+  cover_url_not: String
+
+  """All values that are contained in given list."""
+  cover_url_in: [String!]
+
+  """All values that are not contained in given list."""
+  cover_url_not_in: [String!]
+
+  """All values less than the given value."""
+  cover_url_lt: String
+
+  """All values less than or equal the given value."""
+  cover_url_lte: String
+
+  """All values greater than the given value."""
+  cover_url_gt: String
+
+  """All values greater than or equal the given value."""
+  cover_url_gte: String
+
+  """All values containing the given string."""
+  cover_url_contains: String
+
+  """All values not containing the given string."""
+  cover_url_not_contains: String
+
+  """All values starting with the given string."""
+  cover_url_starts_with: String
+
+  """All values not starting with the given string."""
+  cover_url_not_starts_with: String
+
+  """All values ending with the given string."""
+  cover_url_ends_with: String
+
+  """All values not ending with the given string."""
+  cover_url_not_ends_with: String
+  total_views: String
+
+  """All values that are not equal to given value."""
+  total_views_not: String
+
+  """All values that are contained in given list."""
+  total_views_in: [String!]
+
+  """All values that are not contained in given list."""
+  total_views_not_in: [String!]
+
+  """All values less than the given value."""
+  total_views_lt: String
+
+  """All values less than or equal the given value."""
+  total_views_lte: String
+
+  """All values greater than the given value."""
+  total_views_gt: String
+
+  """All values greater than or equal the given value."""
+  total_views_gte: String
+
+  """All values containing the given string."""
+  total_views_contains: String
+
+  """All values not containing the given string."""
+  total_views_not_contains: String
+
+  """All values starting with the given string."""
+  total_views_starts_with: String
+
+  """All values not starting with the given string."""
+  total_views_not_starts_with: String
+
+  """All values ending with the given string."""
+  total_views_ends_with: String
+
+  """All values not ending with the given string."""
+  total_views_not_ends_with: String
+  video_count: String
+
+  """All values that are not equal to given value."""
+  video_count_not: String
+
+  """All values that are contained in given list."""
+  video_count_in: [String!]
+
+  """All values that are not contained in given list."""
+  video_count_not_in: [String!]
+
+  """All values less than the given value."""
+  video_count_lt: String
+
+  """All values less than or equal the given value."""
+  video_count_lte: String
+
+  """All values greater than the given value."""
+  video_count_gt: String
+
+  """All values greater than or equal the given value."""
+  video_count_gte: String
+
+  """All values containing the given string."""
+  video_count_contains: String
+
+  """All values not containing the given string."""
+  video_count_not_contains: String
+
+  """All values starting with the given string."""
+  video_count_starts_with: String
+
+  """All values not starting with the given string."""
+  video_count_not_starts_with: String
+
+  """All values ending with the given string."""
+  video_count_ends_with: String
+
+  """All values not ending with the given string."""
+  video_count_not_ends_with: String
+  collection_url: String
+
+  """All values that are not equal to given value."""
+  collection_url_not: String
+
+  """All values that are contained in given list."""
+  collection_url_in: [String!]
+
+  """All values that are not contained in given list."""
+  collection_url_not_in: [String!]
+
+  """All values less than the given value."""
+  collection_url_lt: String
+
+  """All values less than or equal the given value."""
+  collection_url_lte: String
+
+  """All values greater than the given value."""
+  collection_url_gt: String
+
+  """All values greater than or equal the given value."""
+  collection_url_gte: String
+
+  """All values containing the given string."""
+  collection_url_contains: String
+
+  """All values not containing the given string."""
+  collection_url_not_contains: String
+
+  """All values starting with the given string."""
+  collection_url_starts_with: String
+
+  """All values not starting with the given string."""
+  collection_url_not_starts_with: String
+
+  """All values ending with the given string."""
+  collection_url_ends_with: String
+
+  """All values not ending with the given string."""
+  collection_url_not_ends_with: String
+}
+
+input CollectionsWhereUniqueInput {
+  id: ID
+  title: String
 }
 
 scalar DateTime
@@ -232,21 +744,27 @@ scalar Long
 
 type Mutation {
   createUser(data: UserCreateInput!): User!
+  createCollections(data: CollectionsCreateInput!): Collections!
   createVideo(data: VideoCreateInput!): Video!
   createCategory(data: CategoryCreateInput!): Category!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  updateCollections(data: CollectionsUpdateInput!, where: CollectionsWhereUniqueInput!): Collections
   updateVideo(data: VideoUpdateInput!, where: VideoWhereUniqueInput!): Video
   updateCategory(data: CategoryUpdateInput!, where: CategoryWhereUniqueInput!): Category
   deleteUser(where: UserWhereUniqueInput!): User
+  deleteCollections(where: CollectionsWhereUniqueInput!): Collections
   deleteVideo(where: VideoWhereUniqueInput!): Video
   deleteCategory(where: CategoryWhereUniqueInput!): Category
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  upsertCollections(where: CollectionsWhereUniqueInput!, create: CollectionsCreateInput!, update: CollectionsUpdateInput!): Collections!
   upsertVideo(where: VideoWhereUniqueInput!, create: VideoCreateInput!, update: VideoUpdateInput!): Video!
   upsertCategory(where: CategoryWhereUniqueInput!, create: CategoryCreateInput!, update: CategoryUpdateInput!): Category!
   updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
+  updateManyCollectionses(data: CollectionsUpdateInput!, where: CollectionsWhereInput): BatchPayload!
   updateManyVideos(data: VideoUpdateInput!, where: VideoWhereInput): BatchPayload!
   updateManyCategories(data: CategoryUpdateInput!, where: CategoryWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
+  deleteManyCollectionses(where: CollectionsWhereInput): BatchPayload!
   deleteManyVideos(where: VideoWhereInput): BatchPayload!
   deleteManyCategories(where: CategoryWhereInput): BatchPayload!
 }
@@ -280,12 +798,15 @@ type PageInfo {
 
 type Query {
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  collectionses(where: CollectionsWhereInput, orderBy: CollectionsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Collections]!
   videos(where: VideoWhereInput, orderBy: VideoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Video]!
   categories(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Category]!
   user(where: UserWhereUniqueInput!): User
+  collections(where: CollectionsWhereUniqueInput!): Collections
   video(where: VideoWhereUniqueInput!): Video
   category(where: CategoryWhereUniqueInput!): Category
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  collectionsesConnection(where: CollectionsWhereInput, orderBy: CollectionsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CollectionsConnection!
   videosConnection(where: VideoWhereInput, orderBy: VideoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): VideoConnection!
   categoriesConnection(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CategoryConnection!
 
@@ -298,6 +819,7 @@ type Query {
 
 type Subscription {
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+  collections(where: CollectionsSubscriptionWhereInput): CollectionsSubscriptionPayload
   video(where: VideoSubscriptionWhereInput): VideoSubscriptionPayload
   category(where: CategorySubscriptionWhereInput): CategorySubscriptionPayload
 }
@@ -666,7 +1188,16 @@ type Video implements Node {
   uuid: String!
   name: String!
   description: String!
+  channel: String!
+  duration: String!
+  framerate: String!
+  hd: Boolean!
+  keyword: String!
   path: String!
+  viewnumber: String!
+  likes: String!
+  dislikes: String!
+  preview_url: String!
   category(where: CategoryWhereInput): Category!
   owner(where: UserWhereInput): User!
   isEncoded: String!
@@ -688,7 +1219,16 @@ input VideoCreateInput {
   uuid: String!
   name: String!
   description: String!
+  channel: String
+  duration: String
+  framerate: String
+  hd: Boolean
+  keyword: String
   path: String
+  viewnumber: String
+  likes: String
+  dislikes: String
+  preview_url: String
   isEncoded: String
   category: CategoryCreateOneInput!
   owner: UserCreateOneWithoutVideoInput!
@@ -703,7 +1243,16 @@ input VideoCreateWithoutOwnerInput {
   uuid: String!
   name: String!
   description: String!
+  channel: String
+  duration: String
+  framerate: String
+  hd: Boolean
+  keyword: String
   path: String
+  viewnumber: String
+  likes: String
+  dislikes: String
+  preview_url: String
   isEncoded: String
   category: CategoryCreateOneInput!
 }
@@ -726,8 +1275,26 @@ enum VideoOrderByInput {
   name_DESC
   description_ASC
   description_DESC
+  channel_ASC
+  channel_DESC
+  duration_ASC
+  duration_DESC
+  framerate_ASC
+  framerate_DESC
+  hd_ASC
+  hd_DESC
+  keyword_ASC
+  keyword_DESC
   path_ASC
   path_DESC
+  viewnumber_ASC
+  viewnumber_DESC
+  likes_ASC
+  likes_DESC
+  dislikes_ASC
+  dislikes_DESC
+  preview_url_ASC
+  preview_url_DESC
   isEncoded_ASC
   isEncoded_DESC
   createdAt_ASC
@@ -741,7 +1308,16 @@ type VideoPreviousValues {
   uuid: String!
   name: String!
   description: String!
+  channel: String!
+  duration: String!
+  framerate: String!
+  hd: Boolean!
+  keyword: String!
   path: String!
+  viewnumber: String!
+  likes: String!
+  dislikes: String!
+  preview_url: String!
   isEncoded: String!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -790,7 +1366,16 @@ input VideoUpdateInput {
   uuid: String
   name: String
   description: String
+  channel: String
+  duration: String
+  framerate: String
+  hd: Boolean
+  keyword: String
   path: String
+  viewnumber: String
+  likes: String
+  dislikes: String
+  preview_url: String
   isEncoded: String
   category: CategoryUpdateOneInput
   owner: UserUpdateOneWithoutVideoInput
@@ -809,7 +1394,16 @@ input VideoUpdateWithoutOwnerDataInput {
   uuid: String
   name: String
   description: String
+  channel: String
+  duration: String
+  framerate: String
+  hd: Boolean
+  keyword: String
   path: String
+  viewnumber: String
+  likes: String
+  dislikes: String
+  preview_url: String
   isEncoded: String
   category: CategoryUpdateOneInput
 }
@@ -994,6 +1588,170 @@ input VideoWhereInput {
 
   """All values not ending with the given string."""
   description_not_ends_with: String
+  channel: String
+
+  """All values that are not equal to given value."""
+  channel_not: String
+
+  """All values that are contained in given list."""
+  channel_in: [String!]
+
+  """All values that are not contained in given list."""
+  channel_not_in: [String!]
+
+  """All values less than the given value."""
+  channel_lt: String
+
+  """All values less than or equal the given value."""
+  channel_lte: String
+
+  """All values greater than the given value."""
+  channel_gt: String
+
+  """All values greater than or equal the given value."""
+  channel_gte: String
+
+  """All values containing the given string."""
+  channel_contains: String
+
+  """All values not containing the given string."""
+  channel_not_contains: String
+
+  """All values starting with the given string."""
+  channel_starts_with: String
+
+  """All values not starting with the given string."""
+  channel_not_starts_with: String
+
+  """All values ending with the given string."""
+  channel_ends_with: String
+
+  """All values not ending with the given string."""
+  channel_not_ends_with: String
+  duration: String
+
+  """All values that are not equal to given value."""
+  duration_not: String
+
+  """All values that are contained in given list."""
+  duration_in: [String!]
+
+  """All values that are not contained in given list."""
+  duration_not_in: [String!]
+
+  """All values less than the given value."""
+  duration_lt: String
+
+  """All values less than or equal the given value."""
+  duration_lte: String
+
+  """All values greater than the given value."""
+  duration_gt: String
+
+  """All values greater than or equal the given value."""
+  duration_gte: String
+
+  """All values containing the given string."""
+  duration_contains: String
+
+  """All values not containing the given string."""
+  duration_not_contains: String
+
+  """All values starting with the given string."""
+  duration_starts_with: String
+
+  """All values not starting with the given string."""
+  duration_not_starts_with: String
+
+  """All values ending with the given string."""
+  duration_ends_with: String
+
+  """All values not ending with the given string."""
+  duration_not_ends_with: String
+  framerate: String
+
+  """All values that are not equal to given value."""
+  framerate_not: String
+
+  """All values that are contained in given list."""
+  framerate_in: [String!]
+
+  """All values that are not contained in given list."""
+  framerate_not_in: [String!]
+
+  """All values less than the given value."""
+  framerate_lt: String
+
+  """All values less than or equal the given value."""
+  framerate_lte: String
+
+  """All values greater than the given value."""
+  framerate_gt: String
+
+  """All values greater than or equal the given value."""
+  framerate_gte: String
+
+  """All values containing the given string."""
+  framerate_contains: String
+
+  """All values not containing the given string."""
+  framerate_not_contains: String
+
+  """All values starting with the given string."""
+  framerate_starts_with: String
+
+  """All values not starting with the given string."""
+  framerate_not_starts_with: String
+
+  """All values ending with the given string."""
+  framerate_ends_with: String
+
+  """All values not ending with the given string."""
+  framerate_not_ends_with: String
+  hd: Boolean
+
+  """All values that are not equal to given value."""
+  hd_not: Boolean
+  keyword: String
+
+  """All values that are not equal to given value."""
+  keyword_not: String
+
+  """All values that are contained in given list."""
+  keyword_in: [String!]
+
+  """All values that are not contained in given list."""
+  keyword_not_in: [String!]
+
+  """All values less than the given value."""
+  keyword_lt: String
+
+  """All values less than or equal the given value."""
+  keyword_lte: String
+
+  """All values greater than the given value."""
+  keyword_gt: String
+
+  """All values greater than or equal the given value."""
+  keyword_gte: String
+
+  """All values containing the given string."""
+  keyword_contains: String
+
+  """All values not containing the given string."""
+  keyword_not_contains: String
+
+  """All values starting with the given string."""
+  keyword_starts_with: String
+
+  """All values not starting with the given string."""
+  keyword_not_starts_with: String
+
+  """All values ending with the given string."""
+  keyword_ends_with: String
+
+  """All values not ending with the given string."""
+  keyword_not_ends_with: String
   path: String
 
   """All values that are not equal to given value."""
@@ -1034,6 +1792,166 @@ input VideoWhereInput {
 
   """All values not ending with the given string."""
   path_not_ends_with: String
+  viewnumber: String
+
+  """All values that are not equal to given value."""
+  viewnumber_not: String
+
+  """All values that are contained in given list."""
+  viewnumber_in: [String!]
+
+  """All values that are not contained in given list."""
+  viewnumber_not_in: [String!]
+
+  """All values less than the given value."""
+  viewnumber_lt: String
+
+  """All values less than or equal the given value."""
+  viewnumber_lte: String
+
+  """All values greater than the given value."""
+  viewnumber_gt: String
+
+  """All values greater than or equal the given value."""
+  viewnumber_gte: String
+
+  """All values containing the given string."""
+  viewnumber_contains: String
+
+  """All values not containing the given string."""
+  viewnumber_not_contains: String
+
+  """All values starting with the given string."""
+  viewnumber_starts_with: String
+
+  """All values not starting with the given string."""
+  viewnumber_not_starts_with: String
+
+  """All values ending with the given string."""
+  viewnumber_ends_with: String
+
+  """All values not ending with the given string."""
+  viewnumber_not_ends_with: String
+  likes: String
+
+  """All values that are not equal to given value."""
+  likes_not: String
+
+  """All values that are contained in given list."""
+  likes_in: [String!]
+
+  """All values that are not contained in given list."""
+  likes_not_in: [String!]
+
+  """All values less than the given value."""
+  likes_lt: String
+
+  """All values less than or equal the given value."""
+  likes_lte: String
+
+  """All values greater than the given value."""
+  likes_gt: String
+
+  """All values greater than or equal the given value."""
+  likes_gte: String
+
+  """All values containing the given string."""
+  likes_contains: String
+
+  """All values not containing the given string."""
+  likes_not_contains: String
+
+  """All values starting with the given string."""
+  likes_starts_with: String
+
+  """All values not starting with the given string."""
+  likes_not_starts_with: String
+
+  """All values ending with the given string."""
+  likes_ends_with: String
+
+  """All values not ending with the given string."""
+  likes_not_ends_with: String
+  dislikes: String
+
+  """All values that are not equal to given value."""
+  dislikes_not: String
+
+  """All values that are contained in given list."""
+  dislikes_in: [String!]
+
+  """All values that are not contained in given list."""
+  dislikes_not_in: [String!]
+
+  """All values less than the given value."""
+  dislikes_lt: String
+
+  """All values less than or equal the given value."""
+  dislikes_lte: String
+
+  """All values greater than the given value."""
+  dislikes_gt: String
+
+  """All values greater than or equal the given value."""
+  dislikes_gte: String
+
+  """All values containing the given string."""
+  dislikes_contains: String
+
+  """All values not containing the given string."""
+  dislikes_not_contains: String
+
+  """All values starting with the given string."""
+  dislikes_starts_with: String
+
+  """All values not starting with the given string."""
+  dislikes_not_starts_with: String
+
+  """All values ending with the given string."""
+  dislikes_ends_with: String
+
+  """All values not ending with the given string."""
+  dislikes_not_ends_with: String
+  preview_url: String
+
+  """All values that are not equal to given value."""
+  preview_url_not: String
+
+  """All values that are contained in given list."""
+  preview_url_in: [String!]
+
+  """All values that are not contained in given list."""
+  preview_url_not_in: [String!]
+
+  """All values less than the given value."""
+  preview_url_lt: String
+
+  """All values less than or equal the given value."""
+  preview_url_lte: String
+
+  """All values greater than the given value."""
+  preview_url_gt: String
+
+  """All values greater than or equal the given value."""
+  preview_url_gte: String
+
+  """All values containing the given string."""
+  preview_url_contains: String
+
+  """All values not containing the given string."""
+  preview_url_not_contains: String
+
+  """All values starting with the given string."""
+  preview_url_starts_with: String
+
+  """All values not starting with the given string."""
+  preview_url_not_starts_with: String
+
+  """All values ending with the given string."""
+  preview_url_ends_with: String
+
+  """All values not ending with the given string."""
+  preview_url_not_ends_with: String
   isEncoded: String
 
   """All values that are not equal to given value."""

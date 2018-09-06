@@ -1,45 +1,122 @@
 # import VideoOrderByInput from "./generated/prisma.graphql"
+# import CollectionsOrderByInput from "./generated/prisma.graphql"
 
 type Video {
-  id: ID!
-  uuid: String!
-  name: String!
-  description: String!
-  category: Category!
-  owner: User!
-  path: String!
-  isEncoded: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
+	id: ID!
+	uuid: String!
+	name: String!
+	description: String!
+	category: Category!
+	owner: User!
+	path: String!
+	isEncoded: String!
+	channel: String
+	duration: String
+	framerate: String
+	hd: Boolean
+	keyword: String
+	viewnumber: String
+	likes: String
+	dislikes: String
+	preview_url: String
+	createdAt: DateTime!
+	updatedAt: DateTime!
+}
+
+type Collections {
+	id: ID!
+	title: String!
+	keyword: String
+	cover_url: String
+	total_views: String
+	video_count: String
+	collection_url: String
+}
+
+type Category {
+	id: ID!
+	name: String!
+	total_videos: String
+	cover_url: String
 }
 
 type User {
-  id: ID!
-  email: String!
-  name: String!
-  videos: [Video]
+	id: ID!
+	email: String!
+	name: String!
+	videos: [Video]
 }
 
 type Query {
-  me: User
-  categories: [Category]!
-  videos(
-    filter: String
-    skip: Int
-    first: Int
-    orderBy: VideoOrderByInput
-  ): [Video]
+	me: User
+	categories: [Category]!
+  collections(filter: String, skip: Int, first: Int, orderBy: CollectionsOrderByInput): [Collections]!
+	videos(filter: String, skip: Int, first: Int, orderBy: VideoOrderByInput): [Video]
 }
 
 type Mutation {
-  signup(email: String!, password: String!, name: String!): AuthPayload!
-  login(email: String!, password: String!): AuthPayload!
-  createVideo(uuid:String, name: String, description: String, category: String, isEncoded: String, path: String): Video!
-  updateVideo(id:String!, uuid:String, name: String, description: String, category: String, isEncoded: String, path: String): Video!
-  removeVideo(id:String!): Video!
+	signup(email: String!, password: String!, name: String!): AuthPayload!
+	login(email: String!, password: String!): AuthPayload!
+	createCategory(name: String!, total_videos: String, cover_url: String): Category!
+  updateCategory(id: ID!, name: String!, total_videos: String, cover_url: String): Category!
+	createCollection(
+		title: String!
+		keyword: String
+		cover_url: String
+		total_views: String
+		video_count: String
+		collection_url: String
+	): Collections!
+	updateCollection(
+		id: ID!
+		title: String!
+		keyword: String
+		cover_url: String
+		total_views: String
+		video_count: String
+		collection_url: String
+	): Collections!
+	createVideo(
+		uuid: String
+		name: String
+		description: String
+		category: String
+		isEncoded: String
+		path: String
+		channel: String
+		duration: String
+		framerate: String
+		hd: Boolean
+		keyword: String
+		viewnumber: String
+		likes: String
+		dislikes: String
+		preview_url: String
+	): Video!
+	updateVideo(
+		id: String!
+		uuid: String
+		name: String
+		description: String
+		category: String
+		isEncoded: String
+		path: String
+		channel: String
+		duration: String
+		framerate: String
+		hd: Boolean
+		keyword: String
+		viewnumber: String
+		likes: String
+		dislikes: String
+		preview_url: String
+	): Video!
+	removeVideo(id: String!): Video!
+  removeCategory(id: String!): Category!
+	removeCollection(id: String!): Collections!
 }
 
 type AuthPayload {
-  token: String!
-  user: User!
+	token: String!
+	user: User!
 }

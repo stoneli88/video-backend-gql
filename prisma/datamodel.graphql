@@ -1,27 +1,48 @@
 type User {
-  id: ID! @unique
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  email: String! @unique
-  password: String!
-  name: String!
-  video: [Video!]!
+	id: ID! @unique
+	createdAt: DateTime!
+	updatedAt: DateTime!
+	email: String! @unique
+	password: String!
+	name: String!
+	video: [Video!]!
 }
 
 type Category {
-  id: ID! @unique
-  name: String!
+	id: ID! @unique
+	name: String! @unique
+	total_videos: String! @default(value: "0")
+	cover_url: String! @default(value: "")
+}
+
+type Collections {
+	id: ID! @unique
+	title: String! @unique
+	keyword: String! @default(value: "")
+	cover_url: String! @default(value: "")
+	total_views: String! @default(value: "")
+	video_count: String! @default(value: "")
+	collection_url: String! @default(value: "")
 }
 
 type Video {
-  id: ID! @unique
-  uuid: String!
-  name: String!
-  description: String!
-  path: String! @default(value: "")
-  category: Category!
-  owner: User!
-  isEncoded: String! @default(value: "No")
-  createdAt: DateTime!
-  updatedAt: DateTime!
+	id: ID! @unique
+	uuid: String!
+	name: String!
+	description: String!
+	channel: String! @default(value: "2")
+	duration: String! @default(value: "0.00")
+	framerate: String! @default(value: "29.99")
+	hd: Boolean! @default(value: false)
+	keyword: String! @default(value: "")
+	path: String! @default(value: "")
+	viewnumber: String! @default(value: "0")
+	likes: String! @default(value: "0")
+	dislikes: String! @default(value: "0")
+	preview_url: String! @default(value: "")
+	category: Category!
+	owner: User!
+	isEncoded: String! @default(value: "No")
+	createdAt: DateTime!
+	updatedAt: DateTime!
 }

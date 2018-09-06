@@ -92,7 +92,7 @@ Or you can open a Playground by navigating to [http://localhost:4000](http://loc
 `
 #### Collections
 `
- "id":"1",
+"id":"1",
 "title":"name",
 "keyword":"name",
 "cover_url":"",
