@@ -3,12 +3,16 @@
 
 type Video {
 	id: ID!
-	uuid: String!
+	mov_uuid: String!
+	cover_uuid: String!
+	mov_name: String!
+	cover_name: String!
 	name: String!
 	description: String!
 	category: Category!
 	owner: User!
-	path: String!
+	mov_url: String!
+	cover_url: String!
 	isEncoded: String!
 	channel: String
 	duration: String
@@ -50,7 +54,7 @@ type User {
 type Query {
 	me: User
 	categories: [Category]!
-  collections(filter: String, skip: Int, first: Int, orderBy: CollectionsOrderByInput): [Collections]!
+	collections(filter: String, skip: Int, first: Int, orderBy: CollectionsOrderByInput): [Collections]!
 	videos(filter: String, skip: Int, first: Int, orderBy: VideoOrderByInput): [Video]
 }
 
@@ -58,7 +62,7 @@ type Mutation {
 	signup(email: String!, password: String!, name: String!): AuthPayload!
 	login(email: String!, password: String!): AuthPayload!
 	createCategory(name: String!, total_videos: String, cover_url: String): Category!
-  updateCategory(id: ID!, name: String!, total_videos: String, cover_url: String): Category!
+	updateCategory(id: ID!, name: String!, total_videos: String, cover_url: String): Category!
 	createCollection(
 		title: String!
 		keyword: String
@@ -77,30 +81,25 @@ type Mutation {
 		collection_url: String
 	): Collections!
 	createVideo(
-		uuid: String
+		mov_uuid: String!
+		cover_uuid: String!
+		mov_name: String!
+		cover_name: String!
 		name: String
 		description: String
 		category: String
 		isEncoded: String
-		path: String
-		channel: String
-		duration: String
-		framerate: String
 		hd: Boolean
 		keyword: String
-		viewnumber: String
-		likes: String
-		dislikes: String
-		preview_url: String
 	): Video!
 	updateVideo(
 		id: String!
-		uuid: String
 		name: String
 		description: String
 		category: String
 		isEncoded: String
-		path: String
+		mov_url: String
+		cover_url: String
 		channel: String
 		duration: String
 		framerate: String
@@ -109,10 +108,9 @@ type Mutation {
 		viewnumber: String
 		likes: String
 		dislikes: String
-		preview_url: String
 	): Video!
 	removeVideo(id: String!): Video!
-  removeCategory(id: String!): Category!
+	removeCategory(id: String!): Category!
 	removeCollection(id: String!): Collections!
 }
 

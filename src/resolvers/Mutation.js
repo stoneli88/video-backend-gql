@@ -149,49 +149,32 @@ async function createVideo(parent, args, context, info) {
 	let createVideo;
 	const needUpdateParams = {};
 	const {
-		uuid,
-		path,
+		mov_uuid,
+		cover_uuid,
+		mov_name,
+		cover_name,
 		name,
 		description,
 		category,
 		isEncoded,
-		channel,
-		duration,
-		framerate,
 		hd,
-		keyword,
-		viewnumber,
-		likes,
-		dislikes,
-		preview_url
+		keyword
 	} = args;
 
 	if (name) {
 		needUpdateParams['name'] = name;
 	}
-	if (channel) {
-		needUpdateParams['channel'] = channel;
+	if (mov_uuid) {
+		needUpdateParams['mov_uuid'] = mov_uuid;
 	}
-	if (duration) {
-		needUpdateParams['duration'] = duration;
+	if (cover_uuid) {
+		needUpdateParams['cover_uuid'] = cover_uuid;
 	}
-	if (framerate) {
-		needUpdateParams['framerate'] = framerate;
+	if (mov_name) {
+		needUpdateParams['mov_name'] = mov_name;
 	}
-	if (hd) {
-		needUpdateParams['hd'] = hd;
-	}
-	if (viewnumber) {
-		needUpdateParams['viewnumber'] = viewnumber;
-	}
-	if (likes) {
-		needUpdateParams['likes'] = likes;
-	}
-	if (dislikes) {
-		needUpdateParams['dislikes'] = dislikes;
-	}
-	if (preview_url) {
-		needUpdateParams['preview_url'] = dislikes;
+	if (cover_name) {
+		needUpdateParams['cover_name'] = cover_name;
 	}
 	if (keyword) {
 		needUpdateParams['keyword'] = keyword;
@@ -205,11 +188,8 @@ async function createVideo(parent, args, context, info) {
 	if (isEncoded) {
 		needUpdateParams['isEncoded'] = isEncoded;
 	}
-	if (uuid) {
-		needUpdateParams['uuid'] = uuid;
-	}
-	if (path) {
-		needUpdateParams['path'] = path;
+	if (hd) {
+		needUpdateParams['hd'] = hd;
 	}
 
 	needUpdateParams['owner'] = { connect: { id: getUserId(context) } };
@@ -223,8 +203,6 @@ async function updateVideo(parent, args, context, info) {
 	const video = await context.db.query.video({ where: { id: args.id } }, `{ id }`);
 	const needUpdateParams = {};
 	const {
-		uuid,
-		path,
 		name,
 		description,
 		category,
@@ -232,12 +210,12 @@ async function updateVideo(parent, args, context, info) {
 		channel,
 		duration,
 		framerate,
-		hd,
 		keyword,
 		viewnumber,
 		likes,
 		dislikes,
-		preview_url
+		mov_url,
+		cover_url
 	} = args;
 
 	if (!video) {
@@ -253,8 +231,8 @@ async function updateVideo(parent, args, context, info) {
 	if (framerate) {
 		needUpdateParams['framerate'] = framerate;
 	}
-	if (hd) {
-		needUpdateParams['hd'] = hd;
+	if (mov_url) {
+		needUpdateParams['mov_url'] = mov_url;
 	}
 	if (viewnumber) {
 		needUpdateParams['viewnumber'] = viewnumber;
@@ -265,8 +243,8 @@ async function updateVideo(parent, args, context, info) {
 	if (dislikes) {
 		needUpdateParams['dislikes'] = dislikes;
 	}
-	if (preview_url) {
-		needUpdateParams['preview_url'] = dislikes;
+	if (cover_url) {
+		needUpdateParams['cover_url'] = cover_url;
 	}
 	if (keyword) {
 		needUpdateParams['keyword'] = keyword;
@@ -282,12 +260,6 @@ async function updateVideo(parent, args, context, info) {
 	}
 	if (isEncoded !== null) {
 		needUpdateParams['isEncoded'] = isEncoded;
-	}
-	if (uuid !== null) {
-		needUpdateParams['uuid'] = uuid;
-	}
-	if (path !== null) {
-		needUpdateParams['path'] = path;
 	}
 
 	const updatedVideo = await context.db.mutation.updateVideo(

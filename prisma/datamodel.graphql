@@ -27,7 +27,10 @@ type Collections {
 
 type Video {
 	id: ID! @unique
-	uuid: String!
+	mov_uuid: String! @default(value: "")
+	cover_uuid: String! @default(value: "")
+	mov_name: String! @default(value: "")
+	cover_name: String! @default(value: "")
 	name: String!
 	description: String!
 	channel: String! @default(value: "2")
@@ -35,7 +38,8 @@ type Video {
 	framerate: String! @default(value: "29.99")
 	hd: Boolean! @default(value: false)
 	keyword: String! @default(value: "")
-	path: String! @default(value: "")
+	mov_url: String! @default(value: "")
+	cover_url: String! @default(value: "")
 	viewnumber: String! @default(value: "0")
 	likes: String! @default(value: "0")
 	dislikes: String! @default(value: "0")

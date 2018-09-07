@@ -11,8 +11,8 @@ async function categories(parent, args, context, info) {
 }
 
 async function collections(parent, args, context, info) {
-  let where = {};
-  
+	let where = {};
+
 	if (args.filter) {
 		const filterObj = JSON.parse(args.filter);
 		Object.keys(filterObj).forEach((key) => {
@@ -26,8 +26,8 @@ async function collections(parent, args, context, info) {
 				where['AND'] = [ { name: filterObj.name } ];
 			}
 		});
-  }
-  
+	}
+
 	const queriedCollectionses = await context.db.query.collectionses(
 		{ where, skip: args.skip, first: args.first, orderBy: args.orderBy },
 		`{
@@ -39,9 +39,9 @@ async function collections(parent, args, context, info) {
 	    video_count
 	    collection_url
     }`
-  );
-  
-  return queriedCollectionses;
+	);
+
+	return queriedCollectionses;
 }
 
 async function videos(parent, args, context, info) {
@@ -65,10 +65,13 @@ async function videos(parent, args, context, info) {
 	const queriedVideos = await context.db.query.videos(
 		{ where, skip: args.skip, first: args.first, orderBy: args.orderBy },
 		`{ 
-      id,
-      uuid,
-      name,
-      description,
+			id
+			mov_uuid
+			cover_uuid
+			mov_name
+			cover_name
+      name
+      description
       category {
         id
         name
@@ -79,7 +82,15 @@ async function videos(parent, args, context, info) {
         email
       }
       path
-      isEncoded
+			channel
+			duration
+			framerate
+			hd
+			keyword
+			viewnumber
+			likes
+			dislikes
+			preview_url
       createdAt
       updatedAt
     }`
@@ -90,7 +101,7 @@ async function videos(parent, args, context, info) {
 
 module.exports = {
 	me,
-  categories,
-  collections,
+	categories,
+	collections,
 	videos
 };
