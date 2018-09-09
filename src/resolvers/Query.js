@@ -81,7 +81,6 @@ async function videos(parent, args, context, info) {
         name
         email
       }
-      path
 			channel
 			duration
 			framerate
