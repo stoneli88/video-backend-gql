@@ -88,8 +88,6 @@ type Mutation {
 		name: String
 		description: String
 		category: String
-		isEncoded: String
-		hd: Boolean
 		keyword: String
 	): Video!
 	updateVideo(
@@ -97,7 +95,7 @@ type Mutation {
 		name: String
 		description: String
 		category: String
-		isEncoded: String
+		isEncoded: String!
 		mov_url: String
 		cover_url: String
 		channel: String

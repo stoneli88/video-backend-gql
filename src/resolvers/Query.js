@@ -90,6 +90,7 @@ async function videos(parent, args, context, info) {
 			likes
 			dislikes
 			preview_url
+			isEncoded
       createdAt
       updatedAt
     }`

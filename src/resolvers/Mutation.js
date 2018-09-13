@@ -157,7 +157,6 @@ async function createVideo(parent, args, context, info) {
 		description,
 		category,
 		isEncoded,
-		hd,
 		keyword
 	} = args;
 
@@ -188,11 +187,10 @@ async function createVideo(parent, args, context, info) {
 	if (isEncoded) {
 		needUpdateParams['isEncoded'] = isEncoded;
 	}
-	if (hd) {
-		needUpdateParams['hd'] = hd;
-	}
 
 	needUpdateParams['owner'] = { connect: { id: getUserId(context) } };
+
+	console.log(needUpdateParams);
 
 	createVideo = await context.db.mutation.createVideo({ data: needUpdateParams }, `{ id }`);
 
