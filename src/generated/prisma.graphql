@@ -1,5 +1,5 @@
 # source: http://localhost:4466/video
-# timestamp: Fri Sep 07 2018 17:55:59 GMT+0800 (菲律宾标准时间)
+# timestamp: Mon Sep 17 2018 20:29:30 GMT+0800 (菲律宾标准时间)
 
 type AggregateCategory {
   count: Int!
@@ -1201,10 +1201,11 @@ type Video implements Node {
   viewnumber: String!
   likes: String!
   dislikes: String!
-  preview_url: String!
   category(where: CategoryWhereInput): Category!
   owner(where: UserWhereInput): User!
   isEncoded: String!
+  dynamicRes: String
+  manualRes: String
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -1236,8 +1237,9 @@ input VideoCreateInput {
   viewnumber: String
   likes: String
   dislikes: String
-  preview_url: String
   isEncoded: String
+  dynamicRes: String
+  manualRes: String
   category: CategoryCreateOneInput!
   owner: UserCreateOneWithoutVideoInput!
 }
@@ -1264,8 +1266,9 @@ input VideoCreateWithoutOwnerInput {
   viewnumber: String
   likes: String
   dislikes: String
-  preview_url: String
   isEncoded: String
+  dynamicRes: String
+  manualRes: String
   category: CategoryCreateOneInput!
 }
 
@@ -1313,10 +1316,12 @@ enum VideoOrderByInput {
   likes_DESC
   dislikes_ASC
   dislikes_DESC
-  preview_url_ASC
-  preview_url_DESC
   isEncoded_ASC
   isEncoded_DESC
+  dynamicRes_ASC
+  dynamicRes_DESC
+  manualRes_ASC
+  manualRes_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -1341,8 +1346,9 @@ type VideoPreviousValues {
   viewnumber: String!
   likes: String!
   dislikes: String!
-  preview_url: String!
   isEncoded: String!
+  dynamicRes: String
+  manualRes: String
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -1403,8 +1409,9 @@ input VideoUpdateInput {
   viewnumber: String
   likes: String
   dislikes: String
-  preview_url: String
   isEncoded: String
+  dynamicRes: String
+  manualRes: String
   category: CategoryUpdateOneInput
   owner: UserUpdateOneWithoutVideoInput
 }
@@ -1435,8 +1442,9 @@ input VideoUpdateWithoutOwnerDataInput {
   viewnumber: String
   likes: String
   dislikes: String
-  preview_url: String
   isEncoded: String
+  dynamicRes: String
+  manualRes: String
   category: CategoryUpdateOneInput
 }
 
@@ -2104,46 +2112,6 @@ input VideoWhereInput {
 
   """All values not ending with the given string."""
   dislikes_not_ends_with: String
-  preview_url: String
-
-  """All values that are not equal to given value."""
-  preview_url_not: String
-
-  """All values that are contained in given list."""
-  preview_url_in: [String!]
-
-  """All values that are not contained in given list."""
-  preview_url_not_in: [String!]
-
-  """All values less than the given value."""
-  preview_url_lt: String
-
-  """All values less than or equal the given value."""
-  preview_url_lte: String
-
-  """All values greater than the given value."""
-  preview_url_gt: String
-
-  """All values greater than or equal the given value."""
-  preview_url_gte: String
-
-  """All values containing the given string."""
-  preview_url_contains: String
-
-  """All values not containing the given string."""
-  preview_url_not_contains: String
-
-  """All values starting with the given string."""
-  preview_url_starts_with: String
-
-  """All values not starting with the given string."""
-  preview_url_not_starts_with: String
-
-  """All values ending with the given string."""
-  preview_url_ends_with: String
-
-  """All values not ending with the given string."""
-  preview_url_not_ends_with: String
   isEncoded: String
 
   """All values that are not equal to given value."""
@@ -2184,6 +2152,86 @@ input VideoWhereInput {
 
   """All values not ending with the given string."""
   isEncoded_not_ends_with: String
+  dynamicRes: String
+
+  """All values that are not equal to given value."""
+  dynamicRes_not: String
+
+  """All values that are contained in given list."""
+  dynamicRes_in: [String!]
+
+  """All values that are not contained in given list."""
+  dynamicRes_not_in: [String!]
+
+  """All values less than the given value."""
+  dynamicRes_lt: String
+
+  """All values less than or equal the given value."""
+  dynamicRes_lte: String
+
+  """All values greater than the given value."""
+  dynamicRes_gt: String
+
+  """All values greater than or equal the given value."""
+  dynamicRes_gte: String
+
+  """All values containing the given string."""
+  dynamicRes_contains: String
+
+  """All values not containing the given string."""
+  dynamicRes_not_contains: String
+
+  """All values starting with the given string."""
+  dynamicRes_starts_with: String
+
+  """All values not starting with the given string."""
+  dynamicRes_not_starts_with: String
+
+  """All values ending with the given string."""
+  dynamicRes_ends_with: String
+
+  """All values not ending with the given string."""
+  dynamicRes_not_ends_with: String
+  manualRes: String
+
+  """All values that are not equal to given value."""
+  manualRes_not: String
+
+  """All values that are contained in given list."""
+  manualRes_in: [String!]
+
+  """All values that are not contained in given list."""
+  manualRes_not_in: [String!]
+
+  """All values less than the given value."""
+  manualRes_lt: String
+
+  """All values less than or equal the given value."""
+  manualRes_lte: String
+
+  """All values greater than the given value."""
+  manualRes_gt: String
+
+  """All values greater than or equal the given value."""
+  manualRes_gte: String
+
+  """All values containing the given string."""
+  manualRes_contains: String
+
+  """All values not containing the given string."""
+  manualRes_not_contains: String
+
+  """All values starting with the given string."""
+  manualRes_starts_with: String
+
+  """All values not starting with the given string."""
+  manualRes_not_starts_with: String
+
+  """All values ending with the given string."""
+  manualRes_ends_with: String
+
+  """All values not ending with the given string."""
+  manualRes_not_ends_with: String
   createdAt: DateTime
 
   """All values that are not equal to given value."""

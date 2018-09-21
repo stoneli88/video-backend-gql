@@ -157,6 +157,8 @@ async function createVideo(parent, args, context, info) {
 		description,
 		category,
 		isEncoded,
+		dynamicRes,
+		manualRes,
 		keyword
 	} = args;
 
@@ -187,10 +189,14 @@ async function createVideo(parent, args, context, info) {
 	if (isEncoded) {
 		needUpdateParams['isEncoded'] = isEncoded;
 	}
+	if (dynamicRes) {
+		needUpdateParams['dynamicRes'] = dynamicRes;
+	}
+	if (manualRes) {
+		needUpdateParams['manualRes'] = manualRes;
+	}
 
 	needUpdateParams['owner'] = { connect: { id: getUserId(context) } };
-
-	console.log(needUpdateParams);
 
 	createVideo = await context.db.mutation.createVideo({ data: needUpdateParams }, `{ id }`);
 
@@ -213,7 +219,9 @@ async function updateVideo(parent, args, context, info) {
 		likes,
 		dislikes,
 		mov_url,
-		cover_url
+		cover_url,
+		dynamicRes,
+		manualRes
 	} = args;
 
 	if (!video) {
@@ -222,6 +230,12 @@ async function updateVideo(parent, args, context, info) {
 
 	if (channel) {
 		needUpdateParams['channel'] = channel;
+	}
+	if (dynamicRes) {
+		needUpdateParams['dynamicRes'] = dynamicRes;
+	}
+	if (manualRes) {
+		needUpdateParams['manualRes'] = manualRes;
 	}
 	if (duration) {
 		needUpdateParams['duration'] = duration;

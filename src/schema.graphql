@@ -22,7 +22,8 @@ type Video {
 	viewnumber: String
 	likes: String
 	dislikes: String
-	preview_url: String
+	dynamicRes: String
+	manualRes: String
 	createdAt: DateTime!
 	updatedAt: DateTime!
 }
@@ -106,6 +107,8 @@ type Mutation {
 		viewnumber: String
 		likes: String
 		dislikes: String
+		dynamicRes: String,
+		manualRes: String
 	): Video!
 	removeVideo(id: String!): Video!
 	removeCategory(id: String!): Category!

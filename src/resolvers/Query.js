@@ -89,8 +89,9 @@ async function videos(parent, args, context, info) {
 			viewnumber
 			likes
 			dislikes
-			preview_url
 			isEncoded
+			dynamicRes
+			manualRes
       createdAt
       updatedAt
     }`

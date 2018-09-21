@@ -43,10 +43,11 @@ type Video {
 	viewnumber: String! @default(value: "0")
 	likes: String! @default(value: "0")
 	dislikes: String! @default(value: "0")
-	preview_url: String! @default(value: "")
 	category: Category!
 	owner: User!
 	isEncoded: String! @default(value: "No")
+	dynamicRes: String @default(value: "No")
+	manualRes: String @default(value: "No")
 	createdAt: DateTime!
 	updatedAt: DateTime!
 }
