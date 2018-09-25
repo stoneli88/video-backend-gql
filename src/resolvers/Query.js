@@ -46,6 +46,7 @@ async function collections(parent, args, context, info) {
 
 async function videos(parent, args, context, info) {
 	let where = {};
+	console.log(args.filter);
 	if (args.filter) {
 		const filterObj = JSON.parse(args.filter);
 
