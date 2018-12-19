@@ -7,10 +7,10 @@ services:
       - "2222:22"
       - "9080:80"
     environment:
-    # https://github.com/stoneli88.keys
-      DEPLOY_KEY_URL: http://172.16.18.99/malik.l.keys
+    # http://172.16.18.99/malik.l.keys
+      DEPLOY_KEY_URL: https://github.com/stoneli88.keys
     volumes:
-      - rsync:/rsync
+      - ~/work/tmp:/rsync
   redis:
     image: 'bitnami/redis:latest'
     environment:
@@ -51,9 +51,3 @@ volumes:
     driver: local
   redis_data:
     driver: local
-  rsync:
-    driver: local
-    driver_opts:
-         type: None
-         device: $HOME/Work/tmp/rsync
-         o: bind

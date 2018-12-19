@@ -53,6 +53,7 @@ type User {
 }
 
 type Query {
+	isTokenValid(token: String!): User
 	me: User
 	categories: [Category]!
 	collections(filter: String, skip: Int, first: Int, orderBy: CollectionsOrderByInput): [Collections]!
@@ -107,7 +108,7 @@ type Mutation {
 		viewnumber: String
 		likes: String
 		dislikes: String
-		dynamicRes: String,
+		dynamicRes: String
 		manualRes: String
 	): Video!
 	removeVideo(id: String!): Video!

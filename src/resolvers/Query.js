@@ -5,6 +5,12 @@ async function me(parent, args, ctx, info) {
 	return ctx.db.query.user({ where: { id } }, info);
 }
 
+async function isTokenValid(parent, args, context, info) {
+	let id = getUserId(args.token);
+	if (!id) id = "";
+	return context.db.query.user({ where: { id } }, info);
+}
+
 async function categories(parent, args, context, info) {
 	const queriedVideos = await context.db.query.categories({}, `{ id name }`);
 	return queriedVideos;
@@ -46,7 +52,6 @@ async function collections(parent, args, context, info) {
 
 async function videos(parent, args, context, info) {
 	let where = {};
-	console.log(args.filter);
 	if (args.filter) {
 		const filterObj = JSON.parse(args.filter);
 
@@ -103,6 +108,7 @@ async function videos(parent, args, context, info) {
 
 module.exports = {
 	me,
+	isTokenValid,
 	categories,
 	collections,
 	videos
